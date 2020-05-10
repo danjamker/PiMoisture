@@ -3,7 +3,6 @@
 # Start by importing the libraries we want to use
 
 import RPi.GPIO as GPIO # This is the GPIO library we need to use the GPIO pins on the Raspberry Pi
-import smtplib # This is the SMTP library we need to send the email notification
 import time # This is the time library, we need this so we can use the sleep function
 import requests
 
