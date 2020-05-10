@@ -1,0 +1,11 @@
+requests
+celery==4.4.2
+minio
+pathlib2==2.3.5
+gevent==20.5.0
+RPi.GPIO==0.7.0
+importlib-metadata
+pymongo
+pika
+# python-rpi.gpio
+# python3-rpi.gpio

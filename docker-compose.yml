@@ -1,0 +1,54 @@
+version: '3.4'
+services:
+  worker:
+    build: .
+    image: &img worker
+    command: [python, tasks.py]
+    environment: &env
+      - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672
+      - MONGO_URI=mongodb://root:rootpassword@mongodb:27017
+      - NAME={{.Node.ID}}
+    links:
+      - mongodb
+    depends_on:
+      - rabbitmq
+      - mongodb
+    restart: 'no'
+    volumes:
+      - ./app:/app
+
+  plant_moitor:
+    build: .
+    image: *img
+    command: [python, plant_monitor.py]
+    environment: *env
+    depends_on:
+      - rabbitmq
+    restart: 'no'
+    volumes:
+      - ./app:/app
+    deploy:
+      placement:
+        constraints: [node.labels.moisture_sensor == true]
+      mode: global
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 15672:15672
+      - 1883:1883
+
+  mongodb:
+      image: mongo:latest
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      ports:
+        - 27017:27017
+      volumes:
+        - mongodb_data:/data/db
+      deploy:
+        placement:
+          constraints: [node.labels.db == true]
+
+volumes:
+  mongodb_data:
