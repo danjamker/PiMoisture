@@ -25,8 +25,7 @@ class Record(Document):
 def insert_value(body):
     print("[X] Received time:" + str(body["t"]) + " and temperature: " + str(body["T"]))
     try:
-        print(os.environ["COUCH_URI"])
-        couch = Server("http://admin:couchdb@couchdb:5984/")
+        couch = Server(os.environ["COUCH_URI"])
         dbname = "plant"
         if dbname in couch:
             db = couch[dbname]
