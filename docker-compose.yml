@@ -49,9 +49,6 @@ services:
         - '5986:5986'
       volumes:
         - couchdb_data:/data/db
-      deploy:
-        placement:
-          constraints: [node.labels.db == true]
 
 volumes:
   couchdb_data:
