@@ -38,7 +38,7 @@ services:
       - 1883:1883
 
   couchdb:
-      image: couchdb:latest
+      image: treehouses/rpi-couchdb
       environment:
         - COUCHDB_USER=admin
         - COUCHDB_PASSWORD=couchdb
